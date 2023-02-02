@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<style type="text/css">
+    .car {
+        width: 505px;
+        margin: 0 auto;
+        padding: 0px;
+    }
+
+    li {
+        list-style: none;
+        width: 600px;
+        height: 200px;
+        display: flex;
+        justify-content: space-between;
+        background: #464f53;
+        border: blueviolet 2px solid;
+        margin: 10px 0px;
+        border-radius: 15px;
+        padding: 10px;
+        color: white;
+    }
+
+    img {
+        width: 200px;
+        border-radius: 2px;
+    }
+
+    img,
+    div {
+        float: left;
+    }
+
+    div p {
+        margin: 0;
+        line-height: 25px;
+        height: 25px;
+        width: 240px;
+    }
+
+    li div .jia {
+        float: left;
+        color: white;
+    }
+
+    .biao {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .shu {
+        width: 40px;
+        height: 16px;
+    }
+
+
+    input {
+        border-radius: 3px;
+        border: none;
+        background-color: aquamarine;
+        color: rgb(43, 156, 226);
+
+    }
+
+    .input {
+        line-height: 200px;
+    }
+</style>
+
+<body>
+    <ul class="car">
+    </ul>
+</body>
+<script type="text/javascript">
+    var car = document.querySelectorAll(".car")[0];	//获取购物车ul;
+    var shuju = JSON.parse(localStorage.getItem("car"));//获取localstorage里的购物车商品数据;
+    var liebiao = JSON.parse(localStorage.getItem("dongyi"));//获取localstorage里的商品数据;
+    var st = "";
+
+    //遍历数据载入页面
+    for (i = 0; i < shuju.length; i++) {
+        st += `<li class = "danpin">
+						 <img src="${liebiao[shuju[i].id].url}" >
+						<div>
+							<p class="biao"><span>商品${liebiao[shuju[i].id].id}</span></p>
+							<p><span class="jia">${liebiao[shuju[i].id].jiage}rmb</span></p>
+						</div>
+						<div class = "input">
+						<input type="button" value = "-" class = "jian"></input>
+						<input type="text" value = "${shuju[i].shuliang}" class = "shu"></input>
+						<input type="button" value = "+" class = "jiashang"></input>
+						<input type="button" value = "点击删除" class = "shan"></input>
+						</div>
+					</li>`
+    }
+    car.innerHTML = st;
+
+    //改变数量
+    function bian(can, id) {
+        let carshuju = JSON.parse(localStorage.getItem("car"));
+        var biao = carshuju.findIndex(function (v, j) {
+            return v.id === id;
+        })
+        let cart2 = JSON.parse(localStorage.getItem("car"));
+        let shu1 = carshuju[biao].shuliang + can;//改变数量,1;加一;-1,减一
+        let cart = {
+            "id": carshuju[biao].id,
+            "shuliang": shu1
+        }
+        cart2.splice(biao, 1, cart);
+        cart2 = JSON.stringify(cart2);
+        localStorage.setItem("car", cart2);
+    }
+
+    var shan = document.querySelectorAll(".shan");
+    var jiaan = document.querySelectorAll(".jiashang");
+    var jian = document.querySelectorAll(".jian");
+    var shu = document.querySelectorAll(".shu");
+    // 增加一
+    for (let i = 0; i < jiaan.length; i++) {
+        jiaan[i].onclick = function () {
+            shu[i].value = Number(shu[i].value) + 1;
+            bian(1, i);
+        }
+    }
+    // 减少1
+    for (let i = 0; i < jian.length; i++) {
+        jian[i].onclick = function () {
+            if (shu[i].value > 1) {
+                shu[i].value = Number(shu[i].value) - 1;
+                bian(-1, i);
+            }
+        }
+    }
+
+
+    //删除
+    for (let i = 0; i < shan.length; i++) {
+        //给每个删除删除按钮添加点击事件
+        shan[i].onclick = function () {
+            let ul = document.querySelectorAll(".car")[0];
+            let danpin = document.querySelectorAll(".danpin");
+            ul.removeChild(danpin[i]);		//删除对应的商品项
+            let cart2 = JSON.parse(localStorage.getItem("car"));  //获取localstorage里的商品数据;
+            cart2.splice(i, 1);								//删除对应项的商品数据;					
+            localStorage.setItem("car", JSON.stringify(cart2)); //新数据存入顶替旧数据;
+            location.reload();//刷新页面载入新数据;
+        }
+    }
+
+
+</script>
+
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./iconfont/iconfont.css">
+    <title>Dom实战-翻页</title>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+    </header>
+    <div class="main-top">
+        <!-- 图片 -->
+        <div class="banner">
+            <div class="banner-text" >
+                <p style="font-size: 46px;color: white;font-weight: 800;">一分耕耘 一分收获</p>
+            </div>
+        </div>
+        <!-- 视频部分 -->
+        <div class="container">
+            <section class="main">
+                <!-- 中间左边的视频 -->
+                <section class="main-left">
+                    <!-- 中间左边上面的导航栏 -->
+                    <div class=""></div>
+                    <!-- 中间左边下面的视频列表 -->
+                    <div id="list" class="learn-list">
+                        <!-- <div class="item">
+                            <div class="no">1</div>
+                           
+                            <div class="info">
+                                <span class="icon1 iconfont">&#xe8bf;<span style="font-size: 16px;">100</span></span>
+                                <span class="icon2 iconfont">&#xe62c;<span>200</span></span>
+                            </div>
+                           
+                            <div class="icon3 iconfont">&#xe627;</div>
+                            <div class="title">前端学习1</div>
+                        </div> -->
+                    </div>
+                    <!-- 翻页 -->
+                    <div class="pager">
+                        <a href="#">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">4</a>
+                        <a href="#">5</a>
+                        <a href="#">6</a>
+                        <a href="#">7</a>
+
+                    </div>
+                </section>
+                <!-- 中间右边的列表 -->
+                <section class="main-right">
+                    <div class="item1">
+                        <div class="righttable">周活跃榜单</div>
+                        <div>
+                            <ul>
+                                <div>学员<span class="right1">答题数量</span></div>
+                                <ol><a href="#">张一一</a><span>3</span></ol>
+                                <ol><a href="#">王二二</a><span>2</span></ol>
+                                <ol><a href="#">周三撒</a><span>1</span></ol>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="item1">
+                        <div class="righttable">平均得分榜单</div>
+                        <div>
+                            <ul>
+                                <div>学员<span class="right1">平均分</span></div>
+                                <ol><a href="#">张一一</a><span>90</span></ol>
+                                <ol><a href="#">王二二</a><span>89</span></ol>
+                                <ol><a href="#">周三撒</a><span>88</span></ol>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="item1">
+                        <div class="righttable">等级榜</div>
+                        <div>
+                            <ul>
+                                <div>学员<span class="right1">等级</span></div>
+                                <ol><a href="#">张一一</a><span>50</span></ol>
+                                <ol><a href="#">王二二</a><span>49</span></ol>
+                                <ol><a href="#">周三撒</a><span>48</span></ol>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </div>
+    </div>
+     <!-- 页脚 -->
+    <footer class="footer">
+        
+    </footer>
+    <!-- 实现翻页 -->
+    <script>
+        // 动态生成视频列表
+        function createItem(no,title,clickTimes,replyTimes){
+            var dom=document.createElement("div")
+            // 设置属性
+            dom.setAttribute("class","item")
+            var html='<div class="no">'+no+'</div>'+
+            '<div class="info"><span class="icon1 iconfont">&#xe8bf;<span style="font-size: 16px;">'+clickTimes+'</span></span><span class="icon2 iconfont">&#xe62c;<span>'+replyTimes+'</span></span></div>'+
+            '<div class="icon3 iconfont">&#xe627;</div>'+
+            '<div class="title">'+title+'</div>'
+            dom.innerHTML=html
+            return dom
+        }
+        // 分页
+        var data=[]
+        for(var i = 1 ; i < 100 ; ++i){
+            data.push({no:i,title:"前端学习"+i,clickTimes:200+i*2,replyTimes:10+i*6})
+        }
+        // 分割
+        function getData(pages){
+            return data.slice(pages*12,pages*12+12)
+        }
+        var oList=document.getElementById("list")
+        function fillDom(pages){
+            // 清除所有子节点
+            while(oList.hasChildNodes()){
+                oList.removeChild(oList.lastChild)
+            }
+
+            var data=getData(pages)
+            var doms=data.map(function(i){
+                return createItem(i.no, i.title, i.clickTimes, i.replyTimes)
+            })
+            doms.forEach(function(i){
+                oList.appendChild(i)
+            })
+        }
+        fillDom(0)
+        // 绑定事件——翻页
+        var page= document.querySelectorAll(".pager a")
+        for(let i = 0 ; i < page.length ; i++ ){
+            page[i].addEventListener("click",function(){
+                fillDom(i)
+            })
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浏览器存储——购物车</title>
+    <style>
+        /* 商品 */
+        .goods{
+            width: 50%;
+            background-color: rgb(123, 216, 216);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            float: left;
+            
+        }
+        .goods>.item{
+            width: 150px;
+            height: 60px;
+            background-color: aquamarine;
+            margin: 5px;
+            position: relative;
+            border-radius: 5px;
+            
+        }
+        .goods>.item>button{
+            background-color: aqua;
+            border: none;
+            color: white;
+            width: 80px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            border-radius: 3px;
+        }
+        /* 购物车 */
+        .shop{
+            width: 50%;
+            background-color: rgb(89, 186, 119);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            float: right;
+        }
+        .shop>.shopgoods{
+            width: 150px;
+            height: 60px;
+            background-color: rgb(19, 111, 80);
+            margin: 5px;
+            position: relative;
+            border-radius: 5px;
+            /* float: left; */
+        }
+        .shop>.shopgoods>button{
+            background-color: rgb(82, 217, 48);
+            border: none;
+            color: white;
+            width: 40px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            /* right: 0; */
+            margin: 0 auto;
+            border-radius: 3px;
+        }
+        .shop>.shopgoods>input{
+            border: none;
+            position: absolute;
+            right: 5px;
+            bottom: 0;
+            width:20px;
+            text-align: center;
+            border-radius: 3px;
+        }
+        .number-text{
+            position: absolute;
+            bottom: 0;
+            right: 35px;
+            color: white;
+            margin: 0;
+        }
+
+        .item button:hover,.shopgoods button:hover{
+            cursor: pointer;
+            background-color: blueviolet;
+        }
+        .item button:active,.shopgoods button:active{
+            cursor: pointer;
+            background-color: rgb(22, 83, 118);
+        }
+        .item button:focus{
+            cursor: pointer;
+            background-color: rgb(22, 83, 118);
+        }
+    </style>
+</head>
+<body>
+    <!-- 商品 -->
+    <div class="goods" id="goods">
+    </div>
+    <!-- 购物车 -->
+    <div class="shop" id="shop">
+    </div>
+    <script>
+        // 创建商品函数
+        function createItem1(no){
+            var dom1=document.createElement("div")
+            // 设置属性
+            dom1.setAttribute("class","item")
+            var html1='<button>加购'+no+'</button>'
+            dom1.innerHTML= html1
+            return dom1
+        }
+
+        // 创建购物车商品函数
+        var data=[]
+        // var countInput=[]
+        var b1=localStorage.getItem('buy')
+        function createItem2(no){
+            var countInput= document.getElementById("good"+no)
+            data[no]=1
+            if(b1==null){
+                
+                var dom2=document.createElement("div")
+                dom2.setAttribute("class","shopgoods")
+                data[no]=1
+                var html2='<button>'+no+'</button><p class="number-text">数量</p><input type="text" value="'+data[no]+'" class="count-input" id="good'+no+'"/>'
+                dom2.innerHTML=html2
+                alert("第一次加购")
+
+            }else if(b1.indexOf(no)==-1){
+                    // 点击右边加购的物品
+                    var dom2=document.createElement("div")
+                    dom2.setAttribute("class","shopgoods")
+                    
+                    data[no]=1
+                    
+                    var html2='<button>'+no+'</button><p class="number-text">数量</p><input type="text" value="'+data[no]+'" class="count-input" id="good'+no+'"/>'
+                    dom2.innerHTML=html2
+                    location.reload()
+                    alert("商品"+no+"第一次加购")
+                }
+                else{
+                    // var countInput= document.getElementById("good"+no)
+                    // 修改数量
+                    data[no]+=1
+                    countInput.setAttribute("value",data[no])
+                    // countInput.value=data[no]
+                    // location.reload()
+                    alert("已经加购")
+                }
+
+            return dom2
+        }
+
+        // 创建商品
+        var oList=document.getElementById("goods")
+        for(let i=0;i<8;i++){
+           oList.appendChild(createItem1(i))
+        }
+
+        // 点击加购
+        var btns1=document.querySelectorAll(".goods>.item>button")
+        var oShop=document.getElementById("shop")
+        
+        for(let i=0;i<btns1.length;i++){
+            btns1[i].addEventListener("click",function(){
+                localStorage.removeItem('buy')
+                oShop.appendChild(createItem2(i))
+                localStorage.buy=""
+                localStorage.buy+=oShop.innerHTML
+                location.reload()
+            })
+        }
+        
+        // 实现加购物车后不会被刷新丢失
+        if(b1!=null){
+            var buyStorage=localStorage.getItem("buy").replace(/\<\/div\>/g,'\<\/div\>\*').split('*').map(function(i){
+                return i.split(",")
+            })
+            for(let i=0;i<buyStorage.length-1;i++){
+                oShop.innerHTML+=buyStorage[i]
+            }
+        }
+
+        //点击删除
+        var localStorage1
+        var btns2=document.querySelectorAll(".shop>.shopgoods>button")
+        for(let i=0;i<btns2.length;i++){
+            btns2[i].addEventListener("click",function(){
+                localStorage1=localStorage.buy.replace(buyStorage[i],"")
+                localStorage.buy=localStorage1
+                location.reload()
+            })
+        }
+        
+        
+    </script>
+</body>
+</html>

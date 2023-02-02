@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>常见布局——flex实现圣杯布局</title>
+    <style>
+         /* 先实现单页布局 */
+         .layout{
+            margin: 0 auto;
+        }
+        #header{
+            background-color: rgb(146, 145, 143);
+            text-align: center;
+        }
+        #footer{
+            background-color: rgb(146, 145, 143);
+            text-align: center;
+        }
+        #content{
+            display: flex;
+            /* 文字居中 */
+            text-align: center;
+        }
+        .c2{
+            background-color: rgb(42, 143, 190);
+            color: aliceblue;
+            /* 填充剩余部分 */
+            flex-grow: 1;
+            
+        }
+        .c1{
+            background-color: rgb(28, 236, 236);
+            color: aliceblue;
+            width: 160px;
+            order: -1;   
+        }
+        .c3{
+            background-color: rgb(28, 236, 236);
+            color: aliceblue;
+            width: 160px;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <div id="header" class="layout">头部</div>
+        <div id="content" class="layout">
+            <div class="c2">主内容栏自适应宽度</div>
+            <aside class="c1">侧边栏1固定宽度</aside>
+            <aside class="c3">侧边栏2固定宽度</aside>
+        </div>
+        <div id="footer" class="layout">尾部</div>
+    </div>
+</body>
+</html>

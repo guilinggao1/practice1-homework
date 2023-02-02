@@ -1,0 +1,159 @@
+<!DOCTYPE html><!--定义文档类型-->
+<html>
+    <head>
+      <meta charset="utf-8"><!--字符集-->
+      <title>HTML语法和常见标签及其属性</title><!--标题-->
+      <!--<base href="https://www.w3cschool.cn/htmltags/tag-area.html" target="_blank"><!--基本的链接地址/链接目标-->
+      <!-- <link rel="stylesheet" type="text/css" href="style.css">文档与外部资源之间的关系,通常用于链接到样式表-->
+    </head>
+    <body><!--定义文档的主体-->
+      <!--定义超文本链接-->
+      <a href="https://github.com/">访问github(超文本链接)</a><br/><!--定义换行-->
+      <!--定义缩写-->
+      The<abbr title="World Health Organization">WHO</abbr> was founded in 1948.(缩写)<br/>
+      <!--定义地址、签名或者文档的作者身份-->
+      <address>
+        Written by <a href="mailto:webmaster@example.com">Jon Doe</a>.<br> 
+        Visit us at:<br>
+        Example.com<br>
+        Box 564, Disneyland<br>
+        USA（地址、签名或者文档的作者身份）
+      </address>
+      <!--定义图像映射内部的区域-->
+      <p>（图像映射内部的区域：）点击太阳或其他行星，注意变化：</p>
+      <img src="https://gss0.baidu.com/-fo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/09fa513d269759ee73128b3db5fb43166c22df82.jpg" width="145" height="126" alt="Planets" usemap="#planetmap">
+      <map name="planetmap">
+        <area shape="rect" coords="0,0,82,126" target="_blank" alt="Sun" href="https://img.zcool.cn/community/0128a15a7081a7a80120a12341d6eb.png@2o.png">
+        <area shape="circle" coords="90,58,3" target="_blank" alt="Mercury" href="https://p1.ssl.qhimg.com/t01543de0769d085781.jpg">
+        <area shape="circle" coords="124,58,8" target="_blank" alt="Venus" href="https://ts1.cn.mm.bing.net/th/id/R-C.b34e72a5701dd6498aa3514c14d9c634?rik=nE6azIUMCGE9Kw&riu=http%3a%2f%2fimg1.mydrivers.com%2fimg%2f20200812%2f73bba838dfcd48b9b3a4920e2e7f4bfe.jpg&ehk=l85O3BOeNiY1c9xxGirAOqbX2HYEOubeQUKlv0e6Yns%3d&risl=&pid=ImgRaw&r=0">
+      </map>
+      <!--定义文章区域-->
+      <article>
+        <h1>Internet Explorer 9</h1>
+        <p> （定义文章区域）Windows Internet Explorer 9(缩写为 IE9 )在2011年3月14日21:00 发布。</p>
+      </article>
+      <!--定义侧边栏的信息-->
+      <aside>
+        <h4>Epcot Center</h4>
+        <p>（定义侧边栏的信息）The Epcot Center is a theme park in Disney World, Florida.</p>
+      </aside>
+      <!--定义音频内容-->
+      <audio controls>
+        <source src="horse.ogg" type="audio/ogg">
+        <source src="horse.mp3" type="audio/mpeg">
+        您的浏览器不支持 audio 元素。
+      </audio>
+      <!--bdi元素是指双向隔离元素-->
+      <ul>
+        <li>用户 <bdi>hrefs</bdi>: 60 分</li>
+        <li>用户 <bdi>jdoe</bdi>: 80 分</li>
+        <li>用户 <bdi>إيان</bdi>: 90 分</li>
+        </ul>  
+      <!--定义文字方向-->
+        <p><bdo dir="rtl">该段落文字从右到左显示。</bdo></p>  
+      <!--定义长的引用-->
+      <blockquote cite="http://www.worldwildlife.org/who/index.html">
+        For 50 years, WWF has been protecting the future of nature. The world's leading conservation organization, WWF works in 100 countries and is supported by 1.2 million members in the United States and close to 5 million globally.
+      </blockquote> 
+      <!--定义文本粗体-->
+        <p>这是一         
+            个段落（一个或者多个空格会映射为单个空格）</p>
+        <p>&lt;&gt;会被认为是一个标签的开始，如果要使用，请使用转义字符</p>
+        <p>&amp;也要使用转义字符</p>
+        <p><b>属性值建议使用双引号包裹（特别是有多个value时）(文本粗体)</b></p>
+        <p>所有的元素名称和属性必须小写</p>
+      <!--标题-->
+        <p>常见标签</p>
+        <h1>一级标题（一共六级，最好从h2开始写）</h1>
+        <p><span>abc</span>段落：有外边距(块状元素一次站一整行)</p>
+        <div><a>行内元素可以放块状元素里，行内里不写块状元素</a>段落：无外边距</div>
+        <h2>二级</h2>
+        <!--有序列表-->
+        <ol>
+            <li>a(有序列表)</li>
+            <li>b</li>
+            <li>c</li>
+        </ol>
+        <!--无序列表-->
+        <ul>
+            <li>Coffee（无序列表）</li>
+            <li>Tea</li>
+            <li>Milk</li>
+        </ul>
+        <!--定义一个点击按钮-->
+        <button>按钮</button>
+        <!--定义图形，比如图表和其他图像,标签只是图形容器，您必须使用脚本来绘制图形-->
+        <canvas id="myCanvas">你的浏览器不支持 HTML5 canvas 标签。</canvas>
+<script>
+var c=document.getElementById('myCanvas');
+var ctx=c.getContext('2d');
+ctx.fillStyle='#FF0000';
+ctx.fillRect(0,0,80,100);
+</script>
+<!--定义引用-->
+<p><cite>The Scream</cite> by Edward Munch. Painted in 1893.</p>
+<!--定义表格-->
+        <a>表格：tr(行)th(表头)</a>
+        <table>
+        <caption>Monthly savings</caption><!--定义表格标题-->
+         <thead>
+            <tr>
+              <th>Firstname</th>
+              <th>Lastname</th> 
+              <th>Age</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+              <td>Jill</td>
+              <td>Smith</td> 
+              <td>50</td>
+            </tr>
+            <tr>
+              <td>Eve</td>
+              <td>Jackson</td> 
+              <td>94</td>
+            </tr>
+         </tbody>
+        </table>
+      <!--各种文本-->
+      <em>强调文本</em><br>
+      <strong>加粗文本</strong><br>
+      <dfn>定义项目</dfn><br>
+      <code>一段电脑代码</code><br>
+      <samp>计算机样本</samp><br>
+      <kbd>键盘输入</kbd><br>
+      <var>变量</var>
+      <mark>这是一个段落用mark</mark>
+      <!--实现多个空白字符-->
+        实现多个空白字符：<p>插入&nbsp;&ensp;&emsp;三个空格</p>
+        实现多个空白字符：<p style="white-space: pre;">用样式      实现</p>
+       <!--定义可选列表-->
+        <datalist id="browsers">
+          <option value="Internet Explorer">
+          <option value="Firefox">
+          <option value="Chrome">
+          <option value="Opera">
+          <option value="Safari">
+        </datalist>
+        <!--定义表单-->
+        <form action="/statics/demosource/demo-form.php" method="post">
+          First name: <input type="text" name="FirstName" value="Mickey"><br>
+          Last name: <input type="text" name="LastName" value="Mouse"><br>
+          <input type="submit" value="提交">
+          </form>
+        <!--水平线-->
+          <hr />
+        <!--斜体字-->
+        <p>He named his car <i>The lightning</i>, because it was very fast.</p>
+        <!--图像-->
+        <img src="https://ts1.cn.mm.bing.net/th/id/R-C.1063d871fb62c08954c3d18a8b613a7b?rik=9en7INw3ZddpAg&riu=http%3a%2f%2fpic36.photophoto.cn%2f20150805%2f0011024003480994_b.jpg&ehk=FwKqlt7ASt16lSo0scSnlhSkV6P2TXPqgBqyqPjJSoY%3d&risl=&pid=ImgRaw&r=0" alt="Smiley face" height="42" width="42">
+        <!--选项列表-->
+        <select>
+          <option value="volvo">Volvo</option>
+          <option value="saab">Saab</option>
+          <option value="mercedes">Mercedes</option>
+          <option value="audi">Audi</option>
+          </select>
+      </body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事件处理作业1——标签页</title>
+  <style>
+    .table{
+      background-color: aqua;
+      width: 150px;
+      height: 60px;
+      position: relative;
+    }
+    .tabs{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 30px;
+      width: inherit;
+      position: absolute;
+      top: 0px;
+      border: 2px solid white;
+    }
+    .tab{
+      margin: 0 20px;
+      height: inherit;
+    }
+    .content{
+      background-color: aquamarine;
+      height: 30px;
+      width: inherit;
+      position: absolute;
+      text-align: center;
+      bottom: 0;
+      border: 2px solid white;
+    }
+    .hidden{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="table">
+  <div class="tabs">
+    <div class="tab">tab1</div>
+    <div class="tab">tab2</div>
+  </div>
+  <div class="content">
+    <div>tab1's content</div>
+    <div>tab2's content</div>
+  </div>
+</div>
+  <script>
+    var tab1=document.getElementsByClassName("tab")
+    var divs=document.querySelectorAll(".content div")
+
+    for(var i=0;i<tab1.length;i++){
+      (function(i){
+      tab1[i].onclick=function(){
+        for(var j=0;j<divs.length;j++){
+          divs[j].className="hidden"
+        }
+        divs[i].className=""
+      }
+    })(i)
+    }
+    for(var j=0;j<divs.length;j++){
+          divs[j].className="hidden"
+        }
+        divs[0].className=""
+  </script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>购物车</title>
+</head>
+<style>
+    a {
+        text-decoration: none;
+        color: rgb(8, 101, 101);
+    }
+
+    input {
+        border: 2px rgb(15, 168, 215) solid;
+        color: rgb(52, 180, 240);
+        width: 250px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+        background-color: aquamarine;
+
+    }
+
+    input:hover {
+        cursor: pointer;
+        background-color: blueviolet;
+        color: white;
+    }
+
+    input:active {
+        background-color: blue;
+        color: white;
+    }
+
+    li {
+        width: 250px;
+        height: 300px;
+        border: solid 1px #19dde8;
+        list-style: none;
+        margin: 10px 10px;
+        padding: 10px;
+        border-radius: 10px;
+
+    }
+
+    li>img {
+        width: 230px;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    ul {
+        display: block;
+        display: flex;
+        flex-wrap: wrap;
+        overflow: hidden;
+        /* background-color: aqua; */
+    }
+
+    img {
+        width: 250px;
+    }
+
+    p {
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
+
+<body>
+    <!-- 跳转到购物车页面 -->
+    <h4>
+        <a href="shop.html">购物车已有商品种类
+            <span class="shuliang">0</span>
+        </a>
+    </h4>
+    <ul class="ul">
+    </ul>
+</body>
+<script>
+    // 商品数据
+    var st = [
+        {
+            "id": 1,
+            "url": "https://ts1.cn.mm.bing.net/th/id/R-C.08984ed2458db3f835c96bb064ea773f?rik=4%2bxYMWe36fXz%2fA&riu=http%3a%2f%2fwww.kuaipng.com%2fUploads%2fpic%2fw%2f2020%2f03-21%2f75612%2fwater_75612_698_523.5_.png&ehk=z9HeNVE8FkpNRu5QrMdIF4rL1ClFAzDEex2Jfoi3M8g%3d&risl=&pid=ImgRaw&r=0",
+            "jiage": "100"
+        },
+        {
+            "id": 2,
+            "url": "https://ts1.cn.mm.bing.net/th/id/R-C.b51576263540f7db7118b7a062fdb1d0?rik=NpwCEq%2bs0ZqCxg&riu=http%3a%2f%2fimg.juimg.com%2ftuku%2fyulantu%2f131222%2f328288-13122214335412.jpg&ehk=mibHHtYqLQ1nlxZtjyh1NcZ6%2fXHhGFIFrjnmatg%2bCp4%3d&risl=&pid=ImgRaw&r=0",
+            "jiage": "200"
+        },
+        {
+            "id": 3,
+            "url": "https://www.wanwupai.com/upload/product/20190716-1/7228ca1a94d0c9189ecfa2880f30bda1.jpg",
+            "jiage": "300"
+        },
+        {
+            "id": 4,
+            "url": "https://img.zcool.cn/community/0153dc5c3f1085a801213f26965413.jpg@1280w_1l_2o_100sh.jpg",
+            "jiage": "400"
+        },
+        {
+            "id": 5,
+            "url": "https://ts1.cn.mm.bing.net/th/id/R-C.43a587d66f4c5384bc158579975b5d48?rik=wcNfIM5Y6f6MSQ&riu=http%3a%2f%2fpic.to8to.com%2fcase%2f1506%2f17%2f20150617_d64fc91a9a9fecea07f4wrmvw1bzgah8.jpg&ehk=Qzxsubr8shWciy%2fM%2bfxGHMF9ImT14RsUCyjlvUB8yM0%3d&risl=&pid=ImgRaw&r=0",
+            "jiage": "600"
+        }
+    ]
+    //1.存入商品数据,供页面载入和购物车页面提取数据；
+    // 将商品数据转为字符串方便存入localstorage
+    var str = JSON.stringify(st);
+    localStorage.setItem("dongyi", str);
+    //获取已经加入购物车的物品种类数量
+    var shuliang = document.querySelectorAll(".shuliang")[0];
+    //将商品字符串改为对象
+    var shuju = localStorage.getItem("dongyi")
+    var sj = JSON.parse(shuju);
+
+    var stm = "";
+
+    //2.页面载入数据；
+    for (i = 0; i < sj.length; i++) {
+        stm += `<li>
+							<img src="${sj[i].url}">
+							<p>
+								<span>商品${sj[i].id}</span>
+								<span>价格：<span style="color: blue;">${sj[i].jiage}rmb</span></span> 
+							</p>
+							<input type="button" value="点击加入购物车" dataid = ${sj[i].id} />
+					</li>`
+    }
+    var oUl = document.querySelectorAll(".ul")[0];//获取商品的ul
+    oUl.innerHTML = stm;
+
+    //给加入购物车按钮添加点击事件
+    var inp = document.querySelectorAll("input");
+    for (let i = 0; i < inp.length; i++) {
+
+        inp[i].onclick = () => {
+            let carshuju = JSON.parse(localStorage.getItem("car"));
+
+            if (carshuju) {// 如果购物车有商品
+                // 获取某商品的id
+                var pan = carshuju.find(function (v, c) {
+                    return v.id === i;
+                })
+                // 获取某商品的位置
+                var biao = carshuju.findIndex(function (v, j) {
+                    return v.id === i;
+                })
+
+            } else {//购物车没有商品,加入商品到购物车
+                let cart1 = [{ "id": i, "shuliang": 1 }];
+                localStorage.setItem("car", JSON.stringify(cart1));
+            }
+
+            // 有某商品，加数量
+            if (biao != -1) {
+                let cart2 = JSON.parse(localStorage.getItem("car"));
+                let shu = carshuju[biao].shuliang + 1;
+                let cart = {
+                    "id": i,
+                    "shuliang": shu
+                };
+                cart2.splice(biao, 1, cart);
+                cart2 = JSON.stringify(cart2);
+                localStorage.setItem("car", cart2);
+                
+            } else {//没有某商品，加入
+                let cart1 =
+                {
+                    "id": i,
+                    "shuliang": 1
+                }
+                carshuju.push(cart1);
+                cart2 = JSON.stringify(carshuju)
+                localStorage.setItem("car", cart2)
+            }
+            // 改变商品的数量
+            let sss = carshuju;
+            shuliang.innerHTML = sss.length;
+        }
+    }
+
+</script>
+
+</html>

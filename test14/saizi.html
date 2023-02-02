@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>骰子布局</title>
+    <style>
+        .layout{
+            display: flex;
+            flex-wrap: wrap;
+            /* 水平居中 */
+            justify-content: space-around;
+            /* 垂直居中 */
+            align-items: center;
+            background-color: black;
+            width: 440px;
+            height: 340px;
+        }
+        .c{
+            display: flex;
+            background-color: aliceblue;
+            border: 10px solid rgb(228, 226, 226);
+            width: 100px;
+            height: 100px;
+
+            position: relative;
+            border-radius: 5px;
+        }
+        .c1{
+            background-color: black;
+            border-radius: 15px;
+            width: 30px;
+            height: 30px;
+        }
+        .c3{
+            background-color: black;
+            border-radius: 15px;
+            width: 30px;
+            height: 30px;
+
+            position: absolute;
+            top: 0;
+            right: 0;
+           
+        }
+        .c4{
+            background-color: black;
+            border-radius: 15px;
+            width: 30px;
+            height: 30px;
+
+            position: absolute;
+            margin: auto auto;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            
+        }
+        .c5{
+            background-color: black;
+            border-radius: 15px;
+            width: 30px;
+            height: 30px;
+            
+            position: absolute;
+            margin: auto auto;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+        }
+        .c6{
+            background-color: black;
+            border-radius: 15px;
+            width: 30px;
+            height: 30px;
+           
+            position: absolute;
+            margin: auto auto;
+            top: 0;
+            bottom: 0;
+            right: 0;
+        }
+        .c7{
+            background-color: black;
+            border-radius: 15px;
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+        .c9{
+            background-color: black;
+            border-radius: 15px;
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <div class="c">
+            <div class="c5"></div>
+        </div>
+        <div class="c">
+            <div class="c1"></div>
+            <div class="c9"></div>
+        </div>
+        <div class="c">
+            <div class="c1"></div>
+            <div class="c5"></div>
+            <div class="c9"></div>
+        </div>
+        <div class="c">
+            <div class="c1"></div>
+            <div class="c3"></div>
+            <div class="c7"></div>
+            <div class="c9"></div>
+        </div>
+        <div class="c">
+            <div class="c1"></div>
+            <div class="c3"></div>
+            <div class="c5"></div>
+            <div class="c7"></div>
+            <div class="c9"></div>
+        </div>
+        <div class="c">
+            <div class="c1"></div>
+            <div class="c3"></div>
+            <div class="c4"></div>
+            <div class="c6"></div>
+            <div class="c7"></div>
+            <div class="c9"></div>
+        </div>
+    </div>
+</body>
+</html>

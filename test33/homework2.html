@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件处理作业2——抽奖</title>
+    <style>
+        #award{
+            width: 600px;
+            height: 600px;
+            border: 1px solid white;
+            display: flex;
+            flex-wrap: wrap;
+		    background-color: #F56C6C;
+		    border-radius: 10px;
+        }
+        .awardbg{
+            background-color: #409EFF;
+            cursor: pointer;
+        }
+       .item{
+            width: 25%;
+            height: 25%;
+            border: 1px solid white;
+            text-align: center;
+            font-size: 20px;
+		    margin: 4%;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    border-radius: 10px;
+		    background-color: pink;
+       }
+        .t5{
+            background-color: #409EFF;
+            cursor: pointer;
+        }
+        </style>
+<body>
+    <div>
+        <div id="award">
+                <div class="item t0">特等奖</div>
+                <div class="item t1">一等奖</div>
+                <div class="item t2">二等奖</div>
+                <div class="item t3">三等奖</div>
+                <div class="item t5">
+                    <div>开始抽奖</div>
+                </div>
+                <div class="item t4">鼓励奖</div>
+                <div class="item t3">三等奖</div>
+                <div class="item t2">二等奖</div>
+                <div class="item t4">鼓励奖</div>
+        </div>
+    </div>
+    <script>
+        // 根据随机数来设置概率:1为特等奖,2~20为鼓励奖,21~30为一等奖,31~60为二等奖,61~100为三等奖
+        var blocks = document.getElementsByClassName("item");
+        var list = [0, 1, 2, 5, 8, 7, 6, 3], i = 0, count = 0, stopTimer;  //list存放数组的下标，i为下标值，默认从下标为0的开始，也就是左上角的高档洋房一套，count用于判断是否与随机数相等每次加一
+        var randomn = Math.floor(Math.random() * 99 + 1); // 创建随机数随机数 
+        console.log(randomn)
+        function timing() {
+            // 将其他盒子都变为粉色
+            for (let j = 0; j < list.length; j++) {
+                blocks[list[j]].style.background = "pink";
+            }
+			blocks[list[i]].style.background = "white";
+			i++; 
+			// 每转一圈，重置i的值
+			if (i === list.length) {
+			    i = 0;
+			}
+            //randomn的值最大为100，最小为1
+            count++; // 根据count的值调整速度
+            // 下面的4个if根据count的值来关闭计时器和重启计时器 改变计时器的时间间隔
+            if (count === 1 || count === 80) {
+                clearInterval(stopTimer);
+                stopTimer = setInterval(timing, 200);
+            }
+            if (count === 10 || count === 75) {
+                clearInterval(stopTimer);
+                stopTimer = setInterval(timing, 100);
+            }
+            if (count === 50) {
+                clearInterval(stopTimer);
+                stopTimer = setInterval(timing, 50);
+            }
+            // 当等于上面的随机数时，停止计时器，获奖的顺序特、鼓励、一、二、三
+            if (count === randomn) {
+                clearInterval(stopTimer);
+                if(count == 1){
+                    for (let j = 0; j < list.length; j++) {
+                    blocks[list[j]].style.background = "pink";
+                    }
+			        blocks[0].style.background = "white";
+                }else if(count > 1 && count <= 20){
+                    for (let j = 0; j < list.length; j++) {
+                    blocks[list[j]].style.background = "pink";
+                    }
+                    if(count < 15){
+			            blocks[5].style.background = "white";
+                    }else{
+                        blocks[8].style.background = "white";
+                    }
+                }else if(count > 20 && count <= 30){
+                    for (let j = 0; j < list.length; j++) {
+                    blocks[list[j]].style.background = "pink";
+                    }
+			        blocks[1].style.background = "white";
+                }else if(count > 30 && count <= 60){
+                    for (let j = 0; j < list.length; j++) {
+                    blocks[list[j]].style.background = "pink";
+                    }
+                    if(count < 40){
+			            blocks[2].style.background = "white";
+                    }else{
+                        blocks[7].style.background = "white";
+                    }
+
+                }else if(count > 60 && count <= 100){
+                    for (let j = 0; j < list.length; j++) {
+                    blocks[list[j]].style.background = "pink";
+                    }
+                    if(count < 80){
+			            blocks[3].style.background = "white";
+                    }else{
+                        blocks[6].style.background = "white";
+                    }
+                }
+				
+            }
+			
+        }
+        // 点击开始按钮后 点击后执行 timing 
+        function start() {
+            blocks[4].removeEventListener("click", start); // 当点击了开始按钮后 移除点击事件 防止用户重复点击
+            stopTimer = setInterval(timing, 300);
+        }
+        blocks[4].addEventListener("click", start);  //下标为4的绑定点击事件
+    </script>
+</body>
+</html>

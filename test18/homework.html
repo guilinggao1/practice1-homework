@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>渐变与动画作业2</title>
+    <style>
+        @keyframes rotate-animation{
+            0%{
+                transform: rotate(0deg);
+            }
+            100%{
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes move-animation{
+            0%{
+                transform: translate(0,0);
+            }
+            25%{
+                transform: translate(-64px,0);
+            }
+            75%{
+                transform: translate(32px,0);
+            }
+            100%{
+                transform: translate(0,0);
+            }
+        }
+        .circle-loader{
+            /* background-color: blue; */
+            display: block;
+            width: 64px;
+            height: 64px;
+            /* 垂直且居中 */
+            /* 是左上角相对于body的中心定位 */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -32px;
+            margin-top: -32px;
+            transform-origin: 16px 16px;
+            /* animation: rotate-animation 5s linear infinite; */
+        }
+        .circle-inline{
+            width: 64px;
+            height: 24px;
+            position: absolute;
+            transform-origin: 4px 4px;
+        }
+        .circle{
+            animation: move-animation 2.5s linear infinite;
+            /* 小球定位 */
+            position: absolute;
+            left: 50%;
+            top: 50%;
+        }
+
+        .circle-inline .circle:nth-child(1){
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+            margin-top: -4px;
+            margin-left: -4px;
+            animation-delay: -0.3s;
+        }
+        .circle-inline .circle:nth-child(2){
+            width: 16px;
+            height: 16px;
+            border-radius: 8px;
+            margin-top: -8px;
+            margin-left: -8px;
+            animation-delay: -0.6s;
+        }
+        .circle-inline .circle:nth-child(3){
+            width: 24px;
+            height: 24px;
+            border-radius: 12px;
+            margin-top: -12px;
+            margin-left: -12px;
+            animation-delay: -0.9s;
+        }
+        /* 旋转 */
+        .circle-inline:nth-child(1){
+            transform: rotate(0deg);
+        }
+        .circle-inline:nth-child(2){
+            transform: rotate(90deg);
+        }
+        .circle-inline:nth-child(3){
+            transform: rotate(180deg);
+        }
+        .circle-inline:nth-child(4){
+            transform: rotate(270deg);
+        }
+        /* 颜色 */
+        .circle-blue{
+            background-color: #1f4e5a;
+        }
+        .circle-yellow{
+            background-color: #ffb265;
+        }
+        .circle-red{
+            background-color: #ff5955;
+        }
+        .circle-green{
+            background-color: #00a691;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="circle-loader">
+            <div class="circle-inline">
+                <div class="circle circle-blue"></div>
+                <div class="circle circle-blue"></div>
+                <div class="circle circle-blue"></div>
+            </div>
+            <div class="circle-inline">
+                <div class="circle circle-yellow"></div>
+                <div class="circle circle-yellow"></div>
+                <div class="circle circle-yellow"></div>
+            </div>
+            <div class="circle-inline">
+                <div class="circle circle-red"></div>
+                <div class="circle circle-red"></div>
+                <div class="circle circle-red"></div>
+            </div>
+            <div class="circle-inline">
+                <div class="circle circle-green"></div>
+                <div class="circle circle-green"></div>
+                <div class="circle circle-green"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

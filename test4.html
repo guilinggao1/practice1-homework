@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>表单二</title>
+    </head>
+    <body>
+        <!--表单-->
+       <form action="/getInfo" method="post"> 
+        <div class="username">
+            <label for="">姓名:</label>
+            <input type="text" name="username" placeholder="用户名">
+        </div>
+        <div class="email">
+            <label>邮箱</label>
+            <input type="email" name="email">   
+        </div>
+        <div class="number">
+            <label>number</label>
+            <input type="text" min="0" max="100" pattern="([1-9]\d*)?[02468]" title="输入0-100的偶数">
+        </div>
+        <div>
+            <label>城市：</label>
+            <input list="cars">
+            <datalist id="cars">
+                <option value="北京">
+                <option value="上海">
+                <option value="深圳">
+            </datalist>
+        </div>
+        <div class="submit">
+            <button>提交</button>
+        </div>
+       </form>
+    </body>
+</html>

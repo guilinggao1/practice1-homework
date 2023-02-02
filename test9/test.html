@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试选择器的优先级</title>
+    <style>
+        /* id选择器 */
+        #id1{
+            color: aqua;
+        }
+        /* 类选择器 */
+        .class{
+            color: blue;
+        }
+        /* 伪类选择器 */
+        p::first-letter{
+            color: blueviolet;
+        }
+        /* 属性选择器 */
+        [id=id1]{
+            color: green;
+        }
+        /* 标签选择器 */
+        p {
+            color: yellow
+        }
+        /* 通配符选择性 */
+        *{
+            color: coral;
+        }
+    </style>
+</head>
+<body>
+    <div id="parent">
+        <p id="id1" class="class" style="color: brown;" >
+          Text
+        </p>
+       </div>
+</body>
+</html>

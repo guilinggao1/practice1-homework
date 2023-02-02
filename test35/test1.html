@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>购物车</title>
+</head>
+<style>
+    body {
+        margin: 0;
+    }
+
+    .goods {
+        width: 48%;
+        background-color: aquamarine;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        float: left;
+    }
+
+    .good {
+        background-color: rgb(40, 110, 44);
+        width: 100px;
+        margin: 5px;
+        border-radius: 3px;
+        color: white;
+    }
+
+    .selected-goods {
+        background-color: rgb(129, 195, 221);
+        width: 48%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        float: right;
+    }
+
+    .selectedGood {
+        background-color: aqua;
+        margin: 5px;
+        border-radius: 3px;
+        /* color: white; */
+    }
+</style>
+
+<body>
+    <div class="app">
+        <!-- 商品 -->
+        <!-- <div data-id1="">
+            <img src="" alt="">
+            <p>
+                <span class="goodname"></span>
+                <span class="goodprice"></span>
+            </p>
+            <button class="btnsgood">加购</button>
+        </div> -->
+        <div class="goods" id="goods">
+        </div>
+        <!-- 购物车 -->
+        <!-- <div data-id2="">
+            <img src="" alt="">
+            <p>
+                <span class="selectedGoodName"></span>
+                <span class="selectedGoodPrice"></span>
+            </p>
+            <button class="btnsSelectedGood">删除</button>
+
+        </div> -->
+        <div class="selected-goods" id="selected-goods">
+        </div>
+
+    </div>
+    <script>
+        // 商品数据
+        var goods = [{ id: 1, name: "商品1", pic: "", price: 200 },
+        { id: 2, name: "商品2", pic: "", price: 300 },
+        { id: 3, name: "商品3", pic: "", price: 400 },
+        { id: 4, name: "商品4", pic: "", price: 500 },
+        { id: 5, name: "商品5", pic: "", price: 600 },]
+
+        var goodsBox = document.getElementById("goods")
+        var selectedGoodsBox = document.getElementById("selected-goods")
+        // 将商品数据写入localstorage
+        var str = JSON.stringify(goods)
+        localStorage.setItem("goods", str)
+        //商品数据转为对象
+        var goodsData = localStorage.getItem("goods")
+        var goodsDataPoiner = JSON.parse(goodsData)
+        //购物车数据转为对象
+        localStorage.selectedGoods
+        // localStorage.getItem("selectedGoods", "")
+        var selectedGoodsData = localStorage.getItem("selectedGoods")
+        var selectedGoodsDataPoiner = JSON.parse(selectedGoodsData)
+
+        // 按键绑定事件
+        //加购
+        goodsBox.addEventListener("click", function (event) {
+            var selectedGoodsData = localStorage.getItem("selectedGoods")
+            var selectedGoodsDataPoiner = JSON.parse(selectedGoodsData)
+            var goodsData = localStorage.getItem("goods")
+            var goodsDataPoiner = JSON.parse(goodsData)
+            let id = event.target.getAttribute("data-id1")
+            var currGoods = goodsDataPoiner.find(function (i) {
+                return i.id == id
+            })
+            if (selectedGoodsDataPoiner) {
+                var currSelectedGoods = selectedGoodsDataPoiner.find(function (i) {
+                    return i.id == id
+                })
+                var position1 = selectedGoodsDataPoiner.findIndex(function (i) {
+                    return i.id == id
+                })
+                if (currSelectedGoods) {//要加购商品存在
+                    alert("商品已经加购")
+                    var selectedGoodsData = localStorage.getItem("selectedGoods")
+                    var selectedGoodsDataPoiner = JSON.parse(selectedGoodsData)
+                    selectedGoodsDataPoiner[position1].amount++
+                    localStorage.selectedGoods = JSON.stringify(selectedGoodsDataPoiner)
+
+
+                } else {//要加购商品还未加购
+                    alert("该商品第一次加购")
+                    //将商品数据写入购物车
+                    var selectedGoodsData = localStorage.getItem("selectedGoods")
+                    var selectedGoodsDataPoiner = JSON.parse(selectedGoodsData)
+
+                    let selectedGood = { id: currGoods.id, name: currGoods.name, price: currGoods.price, amount: currGoods.price, pic: currGoods.pic, amount: 1 }
+                    selectedGoodsDataPoiner.push(selectedGood)
+                    localStorage.selectedGoods = JSON.stringify(selectedGoodsDataPoiner)
+                }
+            } else {
+                alert("第一次加购")
+                let selectedGood = [{ id: currGoods.id, name: currGoods.name, price: currGoods.price, amount: currGoods.price, pic: currGoods.pic, amount: 1 }]
+                var str1 = JSON.stringify(selectedGood)
+                localStorage.setItem("selectedGoods", str1)
+                var selectedGoodsData = localStorage.getItem("selectedGoods")
+                selectedGoodsDataPoiner = JSON.parse(selectedGoodsData)
+
+            }
+
+            location.reload()
+        })
+
+        //删除
+        selectedGoodsBox.addEventListener("click", function (event) {
+            var selectedGoodsData = localStorage.getItem("selectedGoods")
+            var selectedGoodsDataPoiner = JSON.parse(selectedGoodsData)
+            let id = event.target.getAttribute("data-id2")
+            var currSelectedGoods = selectedGoodsDataPoiner.find(function (i) {
+                return i.id == id
+            })
+            var position2 = selectedGoodsDataPoiner.findIndex(function (i) {
+                return i.id == id
+            })
+            selectedGoodsDataPoiner.splice(position2, 1)
+            console.log(selectedGoodsDataPoiner)
+            localStorage.selectedGoods = JSON.stringify(selectedGoodsDataPoiner)
+            location.reload()
+        })
+
+        //商品渲染
+        function render() {
+            // 商品加载
+            var goodsBom = goodsDataPoiner.map(function (i) {
+                return `<div class="good">
+                <img src="${i.pic}" alt="">
+                <p>
+                    <span class="goodname">${i.name}</span>
+                    <span class="goodprice">价格:${i.price}</span>
+                </p>
+                <button class="btnsgood" data-id1="${i.id}">加购</button>
+            </div>`
+            })
+            // 购物车加载
+            if (selectedGoodsDataPoiner) {
+                var selectedGoodsBom = selectedGoodsDataPoiner.map(function (i) {
+                    return `<div class="selectedGood" >
+                <img src="${i.pic}" alt="">
+                <p>
+                    <span class="selectedGoodName">${i.name}</span>
+                    <span class="selectedGoodPrice">价格:${i.price}</span>
+                    <span class="selectedGoodAmountText">数量</span>
+                    <input class="selectedGoodAmount" value="${i.amount}">
+                </p>
+                <button class="btnsSelectedGood" data-id2="${i.id}">删除</button>
+                </div>`
+
+                })
+                selectedGoodsBox.innerHTML = selectedGoodsBom.join("\n")
+            }
+            goodsBox.innerHTML = goodsBom.join("\n")
+        }
+        render()
+    </script>
+</body>
+
+</html>

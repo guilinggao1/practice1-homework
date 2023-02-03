@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面向对象和设计模式</title>
+</head>
+
+<body>
+    <script>
+        function instanceOf(obj, Clazz) {
+            var O = Clazz.prototype;
+            obj = obj.__proto__;
+            while (true) {
+                if (obj === null)
+                    return false;
+                if (O === obj)
+                    return true;
+                obj = obj.__proto__;
+            }
+        }
+        function Cat(name, age, type) {
+            this.name = name;
+            this.age = age;
+            this.type = type;
+        }
+        function Dog(name) {
+            this.name = name;
+        }
+        var cats = new Cat('有鱼', 2, '英短')；
+        var dogs = new Dog('哈士奇');
+        console.log(cats instanceof Cat);  // true
+        console.log(dogs instanceof Dog);  // true
+        console.log(cats instanceof Object);  // true
+        console.log(dogs instanceof Object);  // true
+    </script>
+</body>
+
+</html>

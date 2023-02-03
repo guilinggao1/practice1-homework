@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>继承</title>
+</head>
+
+<body>
+    <script>
+        function Animal(name) {
+            this.name = name
+        }
+        Animal.prototype.eat = function () {
+            return '动物吃' + this.eatfoods
+        }
+        Animal.prototype.sleep = function () {
+            return '动物睡' + this.sleep
+        }
+        function Dog(name, food, ground) {
+            // 调用父类构造函数
+            Animal.call(this.name)
+            this.name = name
+            this.food = food
+            this.ground = ground
+        }
+
+        function Human(name, food, ground) {
+            // 调用父类构造函数
+            Animal.call(this.name)
+            this.name = name
+            this.food = food
+            this.ground = ground
+        }
+        // 实现继承
+        Dog.prototype = Object.create(Animal.prototype)
+        Human.prototype = Object.create(Animal.prototype)
+        // 设置 Dog 、Human的 prototype 属性
+        Dog.prototype.eat = function () {
+            return "狗吃：" + this.food
+        }
+        Human.prototype.eat = function () {
+            return "人吃：" + this.food
+        }
+        Dog.prototype.sleep = function () {
+            return "狗睡：" + this.ground
+        }
+        Human.prototype.sleep = function () {
+            return "人睡：" + this.ground
+        }
+        var dog1 = new Dog("旺柴", "狗粮", "狗窝")
+        var human1 = new Human("张三", "米饭", "床")
+        console.log(dog1.eat())
+        console.log(human1.eat())
+        console.log(dog1.sleep())
+        console.log(human1.sleep())
+    </script>
+</body>
+
+</html>

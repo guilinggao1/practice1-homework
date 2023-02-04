@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>实现回到顶部的效果</title>
+    <title>回到顶部</title>
     <style>
         .container {
             height: 3000px;
             width: 1024px;
+            /* 居中 */
             margin: 0 auto;
             background: gray;
             position: relative;
         }
 
-        .back-top.show {
-            visibility: visible;
-            opacity: 1;
-        }
-
         .back-top {
             visibility: hidden;
+            opacity: 0;
+            /* display: none; */
             position: fixed;
             background: #d9534f;
             width: 50px;
@@ -30,8 +29,19 @@
             bottom: 100px;
             text-align: center;
             cursor: pointer;
-            opacity: 0;
             transition: all 0.5s;
+        }
+
+        .show {
+            /* 显示或者隐藏 */
+            visibility: visible;
+            /* 元素的不透明度 */
+            opacity: 1;
+            /* display: block; */
+        }
+
+        .back-top:hover {
+            opacity: 0.8;
         }
 
         .back-top:before {
@@ -44,11 +54,11 @@
 
 <body>
     <div class="container"></div>
-    <div class="back-top show"></div>
+    <div class="back-top"></div>
     <!-- 引入jquery文件 -->
     <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
     <script>
-        
+
         function BackTop($node) {
             var timer;
             //点击就滚动到头部
@@ -58,7 +68,6 @@
             window.onscroll = function () {
                 //控制台打印正在滚动
                 console.log("onscroll")
-
                 // 防止事件过多
                 clearTimeout(timer)
                 timer = setTimeout(function () {
@@ -66,11 +75,11 @@
                     var windowH = $(window).height();
                     //获取窗口的滚动的高度
                     var scrollTop = $(window).scrollTop();
-                    if (scrollTop > windowH * 0.5) {
+                    if (scrollTop > windowH * 1.5) {
                         //添加属性
                         $node.addClass("show")
                     }
-                    if (scrollTop < windowH * 0.5) {
+                    if (scrollTop < windowH * 1.5) {
                         //移除属性
                         $node.removeClass("show")
                     }

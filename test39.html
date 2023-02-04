@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正则表达式</title>
+</head>
+
+<body>
+    <!-- 作业五 -->
+    <form id="signup" action="#" method="get" onsubmit="return checkPassword()">
+        密码:<input type="password" id="password" name="password">
+        <button type="submit">提交</button>
+        <p id="signup-error" style="color:red"></p>
+    </form>
+
+    <script>
+        // 正则声明
+        var pattern = new RegExp('ab')
+        var pattern2 = /ab/
+        // 正则测试
+        // rexExp.test(string)
+        var str1 = 'mafengshe'
+        console.log(/ma/.test(str1)) // true
+        console.log(/\d/.test(str1)) // false
+        //rexExp.exec(string)
+        var str2 = "a1a2a3";
+        var reg1 = /a./;
+        console.log(reg1.exec(str2)[0]); // a1
+        console.log(reg1.exec(str2)[0]); // a1
+        var reg2 = /a./g;
+        console.log(reg2.exec(str2)[0]); // a1
+        console.log(reg2.exec(str2)[0]); // a2
+        console.log(reg2.exec(str2)[0]); // a3
+        // console.log(reg2.exec(str2)[0]); // null
+        // string.match(regExp)match,可以转换为布尔值用
+        // 是String对象的方法，不同于之前的test和exec，他们是RegExp对象的方法
+        var str3 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        // gi忽略大小写
+        var regexp = /[A-E]/gi;
+        console.log(str3.match(regexp)); // ['A', 'B', 'C', 'D', 'E', 'a', 'b', 'c', 'd', 'e'];
+        // 作业
+        // 作业1
+        // 整数
+        var test1 = " -2 111 -4 3 0 0.18 -0.17 a1 a2 .21 10. 0.00"
+        var reg1 = /(?<=\s)(0|[1-9][0-9]*|-[1-9][0-9]*)(?=\s)/g
+        console.log(test1.match(reg1))//['-2', '111', '-4', '3', '0']
+        var reg3 = /-?\d+/g
+        console.log(test1.match(reg3))// ['-2', '111', '-4', '3', '0', '0', '18', '-0', '17', '1', '2', '21', '10', '0', '00']
+        //非负浮点数
+        var reg2 = /(?<=\s)((\d+)(?=\.)\.(?<=\.)(\d+))/g
+        console.log(test1.match(reg2))//['0.00', '0.18']
+        // 正浮点数
+        var reg4 = /(?<=\s)(([1-9]+)(?=\.)\.(?<=\.)(\d+))|(?<=\s)(([0]+)(?=\.)\.(?<=\.)([1-9]+))/g
+        console.log(test1.match(reg4))//['0.18']
+        // 非正浮点数
+        var reg5 = /(?<=\s)-((\d+)(?=\.)\.(?<=\.)(\d+))|(?<=\s)((0+)(?=\.)\.(?<=\.)(0+))/g
+        console.log(test1.match(reg5))// ['-0.17', '0.00']
+        // 负浮点数
+        var reg6 = /(?<=\s)-((\d+)(?=\.)\.(?<=\.)(\d+))/g
+        console.log(test1.match(reg6))// ['-0.17']
+        // 浮点数
+        var reg7 = /(?<=\s)-?((\d+)(?=\.)\.(?<=\.)(\d+))/g
+        console.log(test1.match(reg7))// ['0.18', '-0.17', '0.00']
+
+        // 作业二
+        var test2 = "a111111111111111_"//true
+        if (/^[a-zA-Z]([a-zA-Z0-9_]){8,16}$/.test(test2)) {
+            console.log(true)
+        } else {
+            console.log(false)
+        }
+        //作业三
+        //设电子邮箱名称只允许英文字母、数字、下划线、英文句号、以及中划线组成，不限制长度
+        var test3 = " 23222@qq.com ssd_1$@qq.com.cn 232ff_-2@qq.com ssd_1@_u.qq.com.cn "
+        var reg8 = /(?<=\s)[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+(?=\s)/g
+        console.log(test3.match(reg8))//['23222@qq.com', '232ff_-2@qq.com', 'ssd_1@_u.qq.com.cn']
+        //作业四
+        var test4 = "  http://www.test.com.cn  htt:/www.test.cn  https://www.test.cn  test.com "
+        var reg9 = /(?<=\s)((http|https):\/\/)?(((www)?(\.[a-zA-Z0-9_-]+)+)|([a-zA-Z0-9_-]+)+)((\.com)|(\.cn)|(\.com.cn))((\/[^/?#]*)+)?(?=\s)/g
+        console.log(test4.match(reg9))//['http://www.test.com.cn', 'https://www.test.cn', 'test.com']
+        //作业五
+        function checkPassword() {
+            var oPassword = document.getElementById("password").value
+            var oError = document.getElementById("signup-error")
+            // 密码要求
+            if (oPassword == " " || !oPassword) {
+                oError.innerText = "请输入密码"
+                return false
+            } else if (oPassword.length < 6 || oPassword.length > 16) {
+                oError.innerText = "密码的大小应为6到16"
+                return false
+            } else if (!(/^[a-zA-Z_].*/.test(oPassword))) {
+                oError.innerText = "密码应该以字母或者下划线开头"
+                return false
+            } else if (!(/^\w*(?<=[a-zA-Z_])\w*(?<=[a-zA-Z_])\w*(?<=[a-zA-Z_])\w*$/.test(oPassword))) {
+                oError.innerText = "密码包括字母，数字，下划线中的三个,不能包括其他特殊字符"
+                return false
+            }
+        }
+        //作业六
+        function addClass(str, clazz) {
+            var t2 = str
+            var t1 = str + " " + clazz
+            var res2 = str.replace(t2, t1)
+            return res2
+        }
+        function removeClass(str, clazz) {
+            var reg = new RegExp(clazz, "g")
+            var res1 = str.replace(reg, "")
+            return res1
+        }
+        console.log(addClass("nav container-wrapper", "fixed"))//nav container-wrapper fixed
+        console.log(removeClass("nav container-wrapper", "container-wrapper"))//nav 
+        //作业七【未完成】
+        var test5 = '<section class="container _3t5s1p2Q" data-reactid="87"><h3 class="_3vLn7TyT" data-reactid="88"><span class="_38mYUoTL" data-reactid="89">SHARED COURSE</span><span class="_2RZ2gPbP" data-reactid="90">课程分享</span></h3><div class="_3QELJy8F" data-reactid="91"><a class="SliMR-Gx" href="http://bbs.mafengshe.com/topic/52" data-reactid="92"><div class="_3uwstH3_" style="background-image:url(http://static.mafengshe.com/home/pic/2.jpg?imageMogr2/quality/40);width:300px;height:180px;" data-reactid="93"></div><h4 class="_3O-WB6Wi" data-reactid="94">单线程模型与定时器</h4><span class="_29SY57J8" data-reactid="95"><svg style="display:inline-block;color:inherit;fill:currentColor;height:24px;width:18px;user-select:none;transition:all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;margin:0 3px;" viewBox="0 0 24 24" data-reactid="96"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" data-reactid="97"></path></svg><!-- react-text: 98 -->导师：<!-- /react-text --><!-- react-text: 99 -->Mark<!-- /react-text --></span><span class="_2xJq_01A" data-reactid="100"><svg style="display:inline-block;color:inherit;fill:currentColor;height:24px;width:18px;user-select:none;transition:all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;margin:0 3px;" viewBox="0 0 24 24" data-reactid="101"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" data-reactid="102"></path></svg><!-- react-text: 103 -->时长：<!-- /react-text --><!-- react-text: 104 -->1.5h<!-- /react-text --></span></a><a class="SliMR-Gx" href="http://bbs.mafengshe.com/topic/45" data-reactid="105"><div class="_3uwstH3_" style="background-image:url(http://static.mafengshe.com/home/pic/1.jpg?imageMogr2/quality/40);width:300px;height:180px;" data-reactid="106"></div><h4 class="_3O-WB6Wi" data-reactid="107">ES6 基础</h4><span class="_29SY57J8" data-reactid="108"><svg style="display:inline-block;color:inherit;fill:currentColor;height:24px;width:18px;user-select:none;transition:all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;margin:0 3px;" viewBox="0 0 24 24" data-reactid="109"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" data-reactid="110"></path></svg><!-- react-text: 111 -->导师：<!-- /react-text --><!-- react-text: 112 -->Mark<!-- /react-text --></span><span class="_2xJq_01A" data-reactid="113"><svg style="display:inline-block;color:inherit;fill:currentColor;height:24px;width:18px;user-select:none;transition:all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;margin:0 3px;" viewBox="0 0 24 24" data-reactid="114"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" data-reactid="115"></path></svg><!-- react-text: 116 -->时长：<!-- /react-text --><!-- react-text: 117 -->1.5h<!-- /react-text --></span></a><a class="SliMR-Gx" href="http://bbs.mafengshe.com/topic/39" data-reactid="118"><div class="_3uwstH3_" style="background-image:url(http://static.mafengshe.com/home/pic/2.jpg?imageMogr2/quality/40);width:300px;height:180px;" data-reactid="119"></div><h4 class="_3O-WB6Wi" data-reactid="120">Vue.js 2.0 入门指南</h4><span class="_29SY57J8" data-reactid="121"><svg style="display:inline-block;color:inherit;fill:currentColor;height:24px;width:18px;user-select:none;transition:all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;margin:0 3px;" viewBox="0 0 24 24" data-reactid="122"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" data-reactid="123"></path></svg><!-- react-text: 124 -->导师：<!-- /react-text --><!-- react-text: 125 -->Mark<!-- /react-text --></span><span class="_2xJq_01A" data-reactid="126"><svg style="display:inline-block;color:inherit;fill:currentColor;height:24px;width:18px;user-select:none;transition:all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;margin:0 3px;" viewBox="0 0 24 24" data-reactid="127"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" data-reactid="128"></path></svg><!-- react-text: 129 -->时长：<!-- /react-text --><!-- react-text: 130 -->1.5h<!-- /react-text --></span></a><a class="SliMR-Gx" href="http://bbs.mafengshe.com/topic/38" data-reactid="131"><div class="_3uwstH3_" style="background-image:url(http://static.mafengshe.com/home/pic/1.jpg?imageMogr2/quality/40);width:300px;height:180px;" data-reactid="132"></div><h4 class="_3O-WB6Wi" data-reactid="133">Node.js 入门指南</h4><span class="_29SY57J8" data-reactid="134"><svg style="display:inline-block;color:inherit;fill:currentColor;height:24px;width:18px;user-select:none;transition:all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;margin:0 3px;" viewBox="0 0 24 24" data-reactid="135"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" data-reactid="136"></path></svg><!-- react-text: 137 -->导师：<!-- /react-text --><!-- react-text: 138 -->Mark<!-- /react-text --></span><span class="_2xJq_01A" data-reactid="139"><svg style="display:inline-block;color:inherit;fill:currentColor;height:24px;width:18px;user-select:none;transition:all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;margin:0 3px;" viewBox="0 0 24 24" data-reactid="140"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" data-reactid="141"></path></svg><!-- react-text: 142 -->时长：<!-- /react-text --><!-- react-text: 143 -->1.5h<!-- /react-text --></span></a><a class="SliMR-Gx" href="http://bbs.mafengshe.com/topic/42" data-reactid="144"><div class="_3uwstH3_" style="background-image:url(http://static.mafengshe.com/home/pic/3.jpg?imageMogr2/quality/40);width:300px;height:180px;" data-reactid="145"></div><h4 class="_3O-WB6Wi" data-reactid="146">CSS 常见技巧</h4><span class="_29SY57J8" data-reactid="147"><svg style="display:inline-block;color:inherit;fill:currentColor;height:24px;width:18px;user-select:none;transition:all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;margin:0 3px;" viewBox="0 0 24 24" data-reactid="148"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" data-reactid="149"></path></svg><!-- react-text: 150 -->导师：<!-- /react-text --><!-- react-text: 151 -->Mark<!-- /react-text --></span><span class="_2xJq_01A" data-reactid="152"><svg style="display:inline-block;color:inherit;fill:currentColor;height:24px;width:18px;user-select:none;transition:all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;margin:0 3px;" viewBox="0 0 24 24" data-reactid="153"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" data-reactid="154"></path></svg><!-- react-text: 155 -->时长：<!-- /react-text --><!-- react-text: 156 -->1.5h<!-- /react-text --></span></a><a class="SliMR-Gx" href="http://bbs.mafengshe.com/topic/22" data-reactid="157"><div class="_3uwstH3_" style="background-image:url(http://static.mafengshe.com/home/pic/3.jpg?imageMogr2/quality/40);width:300px;height:180px;" data-reactid="158"></div><h4 class="_3O-WB6Wi" data-reactid="159">HTML边角知识</h4><span class="_29SY57J8" data-reactid="160"><svg style="display:inline-block;color:inherit;fill:currentColor;height:24px;width:18px;user-select:none;transition:all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;margin:0 3px;" viewBox="0 0 24 24" data-reactid="161"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" data-reactid="162"></path></svg><!-- react-text: 163 -->导师：<!-- /react-text --><!-- react-text: 164 -->Mark<!-- /react-text --></span><span class="_2xJq_01A" data-reactid="165"><svg style="display:inline-block;color:inherit;fill:currentColor;height:24px;width:18px;user-select:none;transition:all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;margin:0 3px;" viewBox="0 0 24 24" data-reactid="166"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" data-reactid="167"></path></svg><!-- react-text: 168 -->时长：<!-- /react-text --><!-- react-text: 169 -->1.5h<!-- /react-text --></span></a></div></section>'
+
+
+        function getInfo(str) {
+            var title = str.match(/(?<=(?<=(<h4)).+(?<=(">)))[^(a)]*(?=(<\/h4>))/g)
+            var teacher = str.match(/(?<=((?<=(导师)).*(?<=(-->))))[a-zA-Z]*(?=(<!-- \/react-text -->))/g)
+            var during = str.match(/(?<=((?<=(时长)).*(?<=(-->))))([0-9]+\.[0-9]+h){1}(?=(<!-- \/react-text -->))/g)
+            var t2
+            for (let i = 0; i < title.length; i++) {
+                var t1 = [{ title: title[i], teacher: teacher[i], during: during[i] }]
+                t2.push(t1)
+            }
+            return t2
+        }
+
+        console.log(getInfo(test5))
+
+
+        //作业八【未完成】
+        var str = "http://work.mafengshe.com:80/question/details?id=24#somehash"
+        function parseURL(str) {
+
+            var protocol = str.match(/[a-zA-Z]+?(?=(:\/\/))/g)
+            var host = str.match(/(?<=(:\/\/))[a-zA-Z0-9\.:]*(?=(\/))/g)
+            var hostname = str.match(/(?<=(:\/\/))[a-zA-Z0-9\.]*(?=(:))/g)
+            var port = str.match(/(?<=(:))[0-9]+?(?=(\/))/g)
+            var pathname = str.match(/(?<=(:([0-9]*)\/))[a-zA-Z0-9\/]*(?=(\?))/g)
+            var hash = str.match(/(?<=(#))[a-zA-Z0-9]*/g)
+            var query = str.match(/(?<=(\?))[a-zA-Z0-9=]*(?=(#))/g)
+
+            var t1 = { protocol: protocol, host: host, port: port, hostname: hostname, pathname: pathname, hash: hash, query: query }
+            return t1
+
+        }
+        console.log(parseURL(str))
+
+    </script>
+</body>
+
+</html>

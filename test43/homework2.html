@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>磁贴效果</title>
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+</head>
+<style>
+    body {
+        margin: 0 auto;
+    }
+
+    .top {
+        height: 40px;
+    }
+
+    .nav {
+        height: 40px;
+        width: 1000px;
+        margin: 0 auto;
+        background-color: green;
+        left: 0;
+        right: 0;
+        top: 0;
+    }
+
+    .fixed {
+        position: fixed;
+    }
+
+    .body {
+        height: 2000px;
+        width: 1000px;
+        margin: 5px auto;
+        background-color: gray;
+    }
+</style>
+
+<body>
+    <div class="top"></div>
+    <div class="nav"></div>
+    <div class="body"></div>
+    <script>
+        function BackTop($node) {
+            var timer;
+            window.onscroll = function () {
+                // 防止事件过多
+                clearTimeout(timer)
+                timer = setTimeout(function () {
+                    //获取窗口的滚动的高度
+                    var scrollTop = $(window).scrollTop();
+                    if (scrollTop > 40) {
+                        //添加属性
+                        $node.addClass("fixed")
+                    }
+                    if (scrollTop < 40) {
+                        //移除属性
+                        $node.removeClass("fixed")
+                    }
+                }, 10)
+            }
+        }
+        //绑定到“^”
+        var ele = $(".nav")
+        new BackTop(ele);
+    </script>
+</body>
+
+</html>
